@@ -4,7 +4,11 @@ policy id which we would like to switch brand new users into) which is then incl
 can be used within the smart hook function itself. In the function a constant called NewUserPol_ID is then declared from this smart hook 
 environment variable. The policy ID for this new user policy ID will vary per Onelogin environment so can be set in the .tfvars file as 
 appropriate. This minimum viable smart hook does not actually use the Policy ID as it just passes through all requests to the 
-statically assigned policy for each user so it is just shown here for illustrative purposes */
+statically assigned policy for each user so it is just shown here for illustrative purposes. This example also is configured to use 
+the latest context version (which is currently 1.1.0) and with all context options enabled (MFA Devices, Location and Risk). This information 
+should be visible in the logs for this smarthook assuming you have all relevant Product SKUs. Finally this example shows how to pull a 
+NPM module into your function to be used in your logic. In this case we are pulling in the AXIOS package for illustrative purposes
+but its not actually being used in the Smart Hook Function */
 
 
 terraform {
