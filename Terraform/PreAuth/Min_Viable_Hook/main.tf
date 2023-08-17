@@ -8,7 +8,9 @@ statically assigned policy for each user so it is just shown here for illustrati
 the latest context version (which is currently 1.1.0) and with all context options enabled (MFA Devices, Location and Risk). This information 
 should be visible in the logs for this smarthook assuming you have all relevant Product SKUs. Finally this example shows how to pull a 
 NPM module into your function to be used in your logic. In this case we are pulling in the AXIOS package for illustrative purposes
-but its not actually being used in the Smart Hook Function. 
+but its not actually being used in the Smart Hook Function. This hook will be applied to ALL USERS in your environment as it does not
+utilize the "Conditions" capability to scope which users the Smart Hook shoud or should not apply to. See other examples in this REPO
+for Conditions scoping.
 For more information please see https://developers.onelogin.com/api-docs/2/smart-hooks/types/pre-authentication */
 
 
