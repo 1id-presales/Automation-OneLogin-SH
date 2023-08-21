@@ -58,9 +58,17 @@ variable "ol_smart_hook_function" {
   description = "function for the pre-auth smart hook"
   default = <<EOF
     exports.handler = async (context) => {
-const NewUserPol_ID = process.env.NewUserPol;
+const NewUserPol_ID_STRING = process.env.NewUserPol;
+const NewUserPol_ID = Number(NewUserPol_ID_STRING);
+let user = context.user;
 console.log("Context: ", context);
-
+if (!context.user.last_login_success)
+{ user.policy_id = NewUserPol_ID;
+  console.log(" This is a new user logging for the first time so switching User Policy ID to " + user.policy_id);
+}
+else {
+		console.log("Not a new user so This is not in scope. Do nothing");
+	}
   return {
     success: true,
     user: {
