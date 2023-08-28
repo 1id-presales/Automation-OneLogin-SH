@@ -59,7 +59,6 @@ variable "ol_smart_hook_function" {
   default = <<EOF
     exports.handler = async (context) => {
 const BLOCKED_COUNTRY = process.env.blocked_country_code;
-let user = context.user;
 console.log("Context: ", context);
 if (context.location.country_code == BLOCKED_COUNTRY ) return { success: false, user: null };
 else {
