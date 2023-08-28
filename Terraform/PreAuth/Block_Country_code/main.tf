@@ -58,10 +58,10 @@ variable "ol_smart_hook_function" {
   description = "function for the pre-auth smart hook"
   default = <<EOF
     exports.handler = async (context) => {
-const NewUserPol_ID = process.env.NewUserPol;
+const blocked_country_code = process.env.blocked_country_code;
 console.log("Context: ", context);
 // Deny access
-    if (context.location.country_code == "IE") return { success: false, user: null };
+    if (context.location.country_code == blocked_country_code) return { success: false, user: null };
   return {
     success: true,
     user: {
