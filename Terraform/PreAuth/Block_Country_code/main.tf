@@ -58,7 +58,7 @@ variable "ol_smart_hook_function" {
   description = "function for the pre-auth smart hook"
   default = <<EOF
     exports.handler = async (context) => {
-const blocked_country = process.env.blocked_country_code;
+//const blocked_country = process.env.blocked_country_code;
 console.log("Context: ", context);
 // Deny access
     if (context.location.country_code == "UK") return { success: false, user: null };
