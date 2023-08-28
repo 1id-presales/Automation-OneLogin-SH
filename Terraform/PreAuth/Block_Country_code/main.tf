@@ -60,7 +60,8 @@ variable "ol_smart_hook_function" {
     exports.handler = async (context) => {
 const NewUserPol_ID = process.env.NewUserPol;
 console.log("Context: ", context);
-
+// Deny access
+    if (context.location.country_code == "IE") return { success: false, user: null };
   return {
     success: true,
     user: {
