@@ -2,3 +2,4 @@
 
 ol_subdomain = ""
 ol_client_id = ""
+ol_sh_condition_role_id = ""
