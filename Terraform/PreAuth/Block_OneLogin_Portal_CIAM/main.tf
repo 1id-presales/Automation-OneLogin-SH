@@ -39,6 +39,11 @@ variable "ol_client_secret" {
   description = "Client Secret for API Credential created in target OneLogin env"
 }
 
+variable "ol_sh_condition_role_id" {
+  type = string
+  description = "Role ID for the role which the Smart Hook condition capability is using"
+}
+
 ############ Var for Smart Hook function ################
 
 variable "ol_smart_hook_function" {
