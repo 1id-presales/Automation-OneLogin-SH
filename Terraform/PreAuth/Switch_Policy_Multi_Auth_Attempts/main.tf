@@ -39,15 +39,25 @@ variable "ol_client_secret" {
   description = "Client Secret for API Credential created in target OneLogin env"
 }
 
+variable "ol_smart_hook_redis_host" {
+  type = string
+  description = "hostname for your redis host this smart hook will connect to"
+}
+
+variable "ol_smart_hook_redis_pw" {
+  type = string
+  description = "password for your redis host this smart hook will connect to"
+}
+
 variable "ol_smart_hook_env_var1" {
   type = string
-  description = "Name of the Smart Hooks Env Var for the New user first time login policy- used in pre-auth smart hook"
+  description = "Name of the Smart Hooks Env Var for User Security policy to be switched into- used in pre-auth smart hook"
   default = "test"
 }
 
 variable "ol_policy_id_new_user" {
   type = string
-  description = "User Security Policy ID for New user first time login- used in pre-auth smart hook"
+  description = "User Security Policy ID for Policy to be switched into- used in pre-auth smart hook"
   default = "1234"
 }
 
