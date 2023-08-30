@@ -42,7 +42,6 @@ variable "ol_client_secret" {
 variable "ol_smart_hook_env_var1" {
   type = string
   description = "Name of the Smart Hooks Env Var for blocked country code"
-  default = "blocked_country_code"
 }
 
 variable "ol_blocked_country_code_value" {
