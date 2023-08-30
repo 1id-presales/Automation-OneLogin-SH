@@ -2,5 +2,7 @@
 
 ol_subdomain = ""
 ol_client_id = ""
+ol_smart_hook_redis_host = ""
+ol_smart_hook_redis_pw = ""
 ol_smart_hook_env_var1 = "NoPushUserPol"
 ol_policy_id_new_user = ""
