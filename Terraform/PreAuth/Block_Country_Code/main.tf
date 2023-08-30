@@ -48,7 +48,6 @@ variable "ol_smart_hook_env_var1" {
 variable "ol_blocked_country_code_value" {
   type = string
   description = "Value for the Country Code that this smart hook will block traffic from"
-  default = "NZ"
 }
 
 ############ Var for Smart Hook function ################
