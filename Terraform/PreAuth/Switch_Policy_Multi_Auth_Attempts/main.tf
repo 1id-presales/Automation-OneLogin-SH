@@ -69,6 +69,42 @@ variable "ol_smart_hook_function" {
   default = <<EOF
     exports.handler = async (context) => {
 console.log("Context: ", context);
+// Connect to the Redis cache
+  const redis = require("redis");
+  const redis_host = process.env.redis_host;
+  const redis_pw = process.env.redis_pw;
+  const client = redis.createClient({
+  port: 6379,
+  host: redis_host,
+  password: redis_pw
+  });
+
+  const user = context.user.username;
+  const Pol_ID_STRING = process.env.attacked_user_pol;
+  const Pol_ID = Number(Pol_ID_STRING);
+  const key = "authAttempts:" + user;
+  const authCount = await new Promise((resolve, reject) => {
+    client.get(key, (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(parseInt(res || "0"));
+      }
+    });
+  });
+
+if (authCount >= 3) {
+    context.user.policy_id = Pol_ID;
+    console.log(" This user is under attack so switching User Policy ID to " + context.user.policy_id);
+  }
+
+  client.multi()
+    .incr(key)
+    .expire(key, 60)
+    .exec();
+
+  // Store the authentication count in the cache
+  client.set(key + "_count", authCount);
 
   return {
     success: true,
