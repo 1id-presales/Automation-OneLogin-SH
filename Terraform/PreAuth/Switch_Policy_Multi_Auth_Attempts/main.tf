@@ -121,7 +121,7 @@ if (authCount >= 3) {
 ## example of how to create some env vars for Smart Hooks to use
 resource "restapi_object" "oneloginsmarthook_vars" {
   path = "/api/2/hooks/envs"
-  data = "{ \"name\": \"${var.ol_smart_hook_env_var1}\", \"value\": \"${var.ol_policy_id_new_user}\"}"
+  data = "{ \"name\": \"${var.ol_smart_hook_env_var1}\", \"value\": \"${var.ol_policy_id}\"}"
 }
 
 resource "restapi_object" "oneloginsmarthook_vars2" {
