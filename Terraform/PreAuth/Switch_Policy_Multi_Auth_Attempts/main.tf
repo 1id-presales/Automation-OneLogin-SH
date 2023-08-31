@@ -55,7 +55,7 @@ variable "ol_smart_hook_env_var1" {
   default = "test"
 }
 
-variable "ol_policy_id_new_user" {
+variable "ol_policy_id" {
   type = string
   description = "User Security Policy ID for Policy to be switched into- used in pre-auth smart hook"
   default = "1234"
