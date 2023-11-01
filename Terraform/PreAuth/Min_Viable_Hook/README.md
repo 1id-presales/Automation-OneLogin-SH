@@ -1,4 +1,4 @@
-This Terraform configuration will create a "Minimum Viable" pre authentication smart hook (with context logging enabled) in 
+This Terraform configuration will create a "Minimum Viable" pre authentication smart hook (with context logging enabled) in <br>
 your OneLogin environment. It also creates a smart hook environment variable (in this example representing the user security 
 policy id which we would like to switch brand new users into) which is then included in the smart hook configuration so that it 
 can be used within the smart hook function itself. In the function a constant called NewUserPol_ID is then declared from this smart hook 
