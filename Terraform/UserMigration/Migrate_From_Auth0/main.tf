@@ -61,6 +61,9 @@ variable "ol_smart_hook_env_var3" {
 ############ Var for Smart Hook function ################
 
 variable "ol_smart_hook_function" {
+  type = string
+  description = "function for the pre-auth smart hook"
+  default =
 }
 
 ############ Smart Hook env vars ################
