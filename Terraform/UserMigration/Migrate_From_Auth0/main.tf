@@ -103,8 +103,8 @@ exports.handler = async (context) => {
           username: context.user_identifier,
           password: context.password,
           scope: "openid",
-          client_id: process.env.AUTH0_CLIENT_ID_v2,
-          client_secret: process.env.AUTH0_CLIENT_SECRET_v2
+          client_id: process.env.AUTH0_CLIENT_ID,
+          client_secret: process.env.AUTH0_CLIENT_SECRET
       }, {
           headers: {
               "Content-Type": "application/json"
