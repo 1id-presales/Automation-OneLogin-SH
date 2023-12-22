@@ -42,17 +42,23 @@ variable "ol_client_secret" {
 
 variable "ol_smart_hook_env_var1" {
   type = string
-  description = "subdomain name of the target Auth0 env"
+  description = "Auth0 subdomain token endpoint"
   default = "test"
 }
 
 variable "ol_smart_hook_env_var2" {
   type = string
-  description = "Client ID for the OIDC app created in target Auth0 env for the password grant flow"
+  description = "Auth0 subdomain jwks endpoint"
   default = "test"
 }
 
 variable "ol_smart_hook_env_var3" {
+  type = string
+  description = "Client ID for the OIDC app created in target Auth0 env for the password grant flow"
+  default = "test"
+}
+
+variable "ol_smart_hook_env_var4" {
   type = string
   description = "Client secret for the OIDC app created in target Auth0 env for the password grant flow"
   default = "test"
@@ -67,6 +73,8 @@ variable "ol_smart_hook_function" {
 const axios = require("axios");
 const jwt = require('jsonwebtoken');
 const jwksClient = require('jwks-rsa');
+let auth0_token = process.env.AUTH0_SUBDOMAIN_TOKEN
+let auth0_jwks = process.env.AUTH0_SUBDOMAIN_JWKS
  
 function getKey(header, callback){
   var client = jwksClient({
@@ -98,7 +106,7 @@ exports.handler = async (context) => {
  
     try {
       // Do a password grant request to validate the password
-      const response = await axios.post("https://dev-1pj8qain83akz0dv.us.auth0.com/oauth/token", {
+      const response = await axios.post(auth0_token, {
           grant_type: "password",
           username: context.user_identifier,
           password: context.password,
@@ -149,19 +157,25 @@ exports.handler = async (context) => {
 ## example of how to create some env vars for Smart Hooks to use
 resource "restapi_object" "oneloginsmarthook_vars" {
   path = "/api/2/hooks/envs"
-  data = "{ \"name\": \"AUTH0_SUBDOMAIN\", \"value\": \"${var.ol_smart_hook_env_var1}\"}"
+  data = "{ \"name\": \"AUTH0_SUBDOMAIN_TOKEN\", \"value\": \"${var.ol_smart_hook_env_var1}\"}"
 }
 
 ## example of how to create some env vars for Smart Hooks to use
 resource "restapi_object" "oneloginsmarthook_vars2" {
   path = "/api/2/hooks/envs"
-  data = "{ \"name\": \"AUTH0_CLIENT_ID\", \"value\": \"${var.ol_smart_hook_env_var2}\"}"
+  data = "{ \"name\": \"AUTH0_SUBDOMAIN_JWKS\", \"value\": \"${var.ol_smart_hook_env_var2}\"}"
 }
 
 ## example of how to create some env vars for Smart Hooks to use
 resource "restapi_object" "oneloginsmarthook_vars3" {
   path = "/api/2/hooks/envs"
-  data = "{ \"name\": \"AUTH0_CLIENT_SECRET\", \"value\": \"${var.ol_smart_hook_env_var3}\"}"
+  data = "{ \"name\": \"AUTH0_CLIENT_ID\", \"value\": \"${var.ol_smart_hook_env_var3}\"}"
+}
+
+## example of how to create some env vars for Smart Hooks to use
+resource "restapi_object" "oneloginsmarthook_vars4" {
+  path = "/api/2/hooks/envs"
+  data = "{ \"name\": \"AUTH0_CLIENT_SECRET\", \"value\": \"${var.ol_smart_hook_env_var4}\"}"
 }
 
 ############ Smart Hook ################
@@ -170,5 +184,6 @@ resource "restapi_object" "oneloginsmarthook_vars3" {
 resource "restapi_object" "oneloginsmarthook_pa" {
   path = "/api/2/hooks"
   depends_on = [restapi_object.oneloginsmarthook_vars]
-  data = "{ \"type\": \"user-migration\", \"disabled\":false, \"runtime\":\"nodejs18.x\", \"retries\":0, \"timeout\":10, \"options\":{}, \"env_vars\":[\"AUTH0_SUBDOMAIN\",\"AUTH0_CLIENT_ID\",\"AUTH0_CLIENT_SECRET\"], \"packages\": {\"axios\": \"1.1.3\", \"jwks-rsa\":\"2.0.1\", \"jsonwebtoken\":\"8.5.1\"} , \"function\":\"${base64encode(var.ol_smart_hook_function)}\"}"
+  data = "{ \"type\": \"user-migration\", \"disabled\":false, \"runtime\":\"nodejs18.x\", \"retries\":0, \"timeout\":10, \"options\":{}, \"env_vars\":[\"AUTH0_SUBDOMAIN_TOKEN\",\"AUTH0_SUBDOMAIN_JWKS\",\"AUTH0_CLIENT_ID\",\"AUTH0_CLIENT_SECRET\"], \"packages\": {\"axios\": \"1.1.3\", \"jwks-rsa\":\"2.0.1\", \"jsonwebtoken\":\"8.5.1\"} , \"function\":\"${base64encode(var.ol_smart_hook_function)}\"}"
 }
+
