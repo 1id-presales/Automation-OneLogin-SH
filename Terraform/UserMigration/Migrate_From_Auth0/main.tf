@@ -42,10 +42,21 @@ variable "ol_client_secret" {
 
 variable "ol_smart_hook_env_var1" {
   type = string
-  description = "Name of the Smart Hooks Env Var for the New user first time login policy- used in user-migration smart hook"
+  description = "Name of the Smart Hooks Env Var to be used in user-migration smart hook"
   default = "test"
 }
 
+variable "ol_smart_hook_env_var2" {
+  type = string
+  description = "Name of the Smart Hooks Env Var to be used in user-migration smart hook
+  default = "test"
+}
+
+variable "ol_smart_hook_env_var3" {
+  type = string
+  description = "Name of the Smart Hooks Env Var to be used in user-migration smart hook"
+  default = "test"
+}
 
 ############ Var for Smart Hook function ################
 
