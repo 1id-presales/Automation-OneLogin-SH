@@ -170,5 +170,5 @@ resource "restapi_object" "oneloginsmarthook_vars3" {
 resource "restapi_object" "oneloginsmarthook_pa" {
   path = "/api/2/hooks"
   depends_on = [restapi_object.oneloginsmarthook_vars]
-  data = "{ \"type\": \"user-migration\", \"disabled\":false, \"runtime\":\"nodejs18.x\", \"context_version\":\"1.1.0\", \"retries\":0, \"timeout\":10, \"options\":{}, \"env_vars\":[\"AUTH0_SUBDOMAIN\",\"AUTH0_CLIENT_ID\",\"AUTH0_CLIENT_SECRET\"], \"packages\": {\"axios\": \"1.1.3\", \"jwks-rsa\":\"2.0.1\", \"jsonwebtoken\":\"8.5.1\"} , \"function\":\"${base64encode(var.ol_smart_hook_function)}\"}"
+  data = "{ \"type\": \"user-migration\", \"disabled\":false, \"runtime\":\"nodejs18.x\", \"retries\":0, \"timeout\":10, \"options\":{}, \"env_vars\":[\"AUTH0_SUBDOMAIN\",\"AUTH0_CLIENT_ID\",\"AUTH0_CLIENT_SECRET\"], \"packages\": {\"axios\": \"1.1.3\", \"jwks-rsa\":\"2.0.1\", \"jsonwebtoken\":\"8.5.1\"} , \"function\":\"${base64encode(var.ol_smart_hook_function)}\"}"
 }
