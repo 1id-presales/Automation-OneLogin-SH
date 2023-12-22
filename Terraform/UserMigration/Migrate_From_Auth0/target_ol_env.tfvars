@@ -2,6 +2,7 @@
 
 ol_subdomain = ""            # required
 ol_client_id = ""            # required
-ol_smart_hook_env_var1 = ""  # required - Auth0 subdomain name
-ol_smart_hook_env_var2 = ""  # required - Auth0 OIDC App Client ID
-ol_smart_hook_env_var3 = ""  # required - Auth0 OIDC App Client Secret
+ol_smart_hook_env_var1 = ""  # required - Auth0 subdomain token endpoint
+ol_smart_hook_env_var2 = ""  # required - Auth0 subddomain jwks 
+ol_smart_hook_env_var3 = ""  # required - Auth0 OIDC App Client ID
+ol_smart_hook_env_var4 = ""  # required - Auth0 OIDC App Client Secret
