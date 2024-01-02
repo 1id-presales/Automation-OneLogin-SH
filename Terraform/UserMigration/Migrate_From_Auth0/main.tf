@@ -78,7 +78,7 @@ let auth0_jwks = process.env.AUTH0_SUBDOMAIN_JWKS
  
 function getKey(header, callback){
   var client = jwksClient({
-    jwksUri: "https://dev-1pj8qain83akz0dv.us.auth0.com/.well-known/jwks.json"
+    jwksUri: auth0_jwks
   });
  
   client.getSigningKey(header.kid, function(err, key) {
