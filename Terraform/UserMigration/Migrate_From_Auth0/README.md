@@ -2,7 +2,7 @@
 
 This example will create 4 **Smart Hook Environment Variables** and **a User Migration Smart Hook** in your target OneLogin environment. <br>
 This example will deploy a **migrate users from Auth0** Smart Hook to your environment that will make an API call to the specified Auth0 environment to validate any credentials entered into the OneLogin Hosted Login page (Where the user does not already exist in the OneLogin environment) and if valiated successfully will create a new user record in OneLogin using claims in the ID Token recieved from the Auth0 environment. <br>
-This example Smart Hook will execute anytime any users in your OneLogin environment attempt to login where an account does not already exist. <br>
+This example Smart Hook will execute anytime login attempts are made to your OneLogin environment where the specified username/email does not already exist. <br>
 Please ensure to **delete any existing User Migration Smart Hooks** that may have been **manually** applied to your target OneLogin environment **before** you try to run this example otherwise you will get an error <br>
 
 For more details on Smart Hooks **https://developers.onelogin.com/api-docs/2/smart-hooks/overview** <br>
