@@ -67,53 +67,60 @@ variable "ol_smart_hook_function" {
   type = string
   description = "function for the pre-auth smart hook"
   default = <<EOF
-    exports.handler = async (context) => {
-console.log("Context: ", context);
-// Connect to the Redis cache
-  const redis = require("redis");
+  exports.handler = async (context) => {
+  console.log("Context ", context);
+ 
+  // Import Redis and connect using async/await
+  const Redis = require("ioredis");
   const redis_host = process.env.redis_host;
   const redis_pw = process.env.redis_pw;
-  const client = redis.createClient({
-  port: 6379,
-  host: redis_host,
-  password: redis_pw
+  const client = new Redis({
+    port: 6380,
+    host: redis_host,
+    password: redis_pw,
+    tls: true
   });
-
-  const user = context.user.username;
+ 
+  const user = context.user.id;
+  const key = "authAttempts:" + user;
   const Pol_ID_STRING = process.env.attacked_user_pol;
   const Pol_ID = Number(Pol_ID_STRING);
-  const key = "authAttempts:" + user;
-  const authCount = await new Promise((resolve, reject) => {
-    client.get(key, (err, res) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(parseInt(res || "0"));
-      }
-    });
-  });
-
-if (authCount >= 3) {
-    context.user.policy_id = Pol_ID;
-    console.log(" This user is under attack so switching User Policy ID to " + context.user.policy_id);
-  }
-
-  client.multi()
-    .incr(key)
-    .expire(key, 60)
-    .exec();
-
-  // Store the authentication count in the cache
-  client.set(key + "_count", authCount);
-
-  return {
-    success: true,
-    user: {
-      policy_id: context.user.policy_id
+ 
+  try {
+    // Get the users authentication count from the cache
+    let authCount = await client.get(key);
+    authCount = parseInt(authCount || "0");
+ 
+    if (authCount >= 3) {
+      context.user.policy_id = Pol_ID;
+      console.log (" This user is potentially under attack so switching to policy with push notifications disabled. User Policy ID switched to " + context.user.policy_id);
     }
+ 
+    await client.multi()
+      .incr(key)
+      .expire(key, 60)
+      .exec();
+ 
+    await client.set(key + "_count", authCount);
+ 
+    // Disconnect from Redis
+    client.quit();
+ 
+    return {
+      success: true,
+      user: context.user
+    };
+  } catch (error) {
+    console.error("Redis Error: ", error);
+    client.quit();
+ 
+    return {
+      success: false,
+      error: error.message
+    };
   }
 }
-    EOF
+    EOF  
 }
 
 ############ Smart Hook env vars ################
@@ -139,5 +146,5 @@ resource "restapi_object" "oneloginsmarthook_vars3" {
 resource "restapi_object" "oneloginsmarthook_pa" {
   path = "/api/2/hooks"
   depends_on = [restapi_object.oneloginsmarthook_vars]
-  data = "{ \"type\": \"pre-authentication\", \"disabled\":false, \"runtime\":\"nodejs18.x\", \"context_version\":\"1.1.0\", \"retries\":0, \"timeout\":1, \"options\":{\"location_enabled\":true, \"risk_enabled\":true, \"mfa_device_info_enabled\":true}, \"env_vars\":[\"${var.ol_smart_hook_env_var1}\",\"redis_host\",\"redis_pw\"], \"packages\": {\"redis\": \"3.1.2\"} , \"function\":\"${base64encode(var.ol_smart_hook_function)}\"}"
+  data = "{ \"type\": \"pre-authentication\", \"disabled\":false, \"runtime\":\"nodejs18.x\", \"context_version\":\"1.1.0\", \"retries\":0, \"timeout\":1, \"options\":{\"location_enabled\":true, \"risk_enabled\":true, \"mfa_device_info_enabled\":true}, \"env_vars\":[\"${var.ol_smart_hook_env_var1}\",\"redis_host\",\"redis_pw\"], \"packages\": {\"ioredis\": \"5.3.2\"} , \"function\":\"${base64encode(var.ol_smart_hook_function)}\"}"
 }
