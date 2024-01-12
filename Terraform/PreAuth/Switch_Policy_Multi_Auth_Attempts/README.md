@@ -14,7 +14,7 @@ For more details on Pre Authentication Smart Hooks please see **https://develope
 
 Create an API credential for Terraform to use in your target OneLogin environment with **"Manage All" permissions**. For detail see **https://developers.onelogin.com/api-docs/2/getting-started/working-with-api-credentials** 
 
-- **START**
+**START**
 - From a system with Terraform and Git installed create a new folder and run **git clone https://github.com/1id-presales/Automation-OneLogin.git**
 - Navigate into the Switch_Policy_Multi_Auth_Attempts folder with **cd Automation-OneLogin-SH/Terraform/PreAuth/Switch_Policy_Multi_Auth_Attempts**
 - Modify the contents of the file **target_ol_env.tfvars** with your favourite text editor as required..
