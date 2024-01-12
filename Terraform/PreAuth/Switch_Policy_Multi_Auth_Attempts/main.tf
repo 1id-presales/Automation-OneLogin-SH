@@ -83,7 +83,7 @@ variable "ol_smart_hook_function" {
  
   const user = context.user.id;
   const key = "authAttempts:" + user;
-  const Pol_ID_STRING = process.env.attacked_user_pol;
+  const Pol_ID_STRING = process.env.push_disabled_policy_id;
   const Pol_ID = Number(Pol_ID_STRING);
  
   try {
