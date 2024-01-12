@@ -60,6 +60,11 @@ variable "ol_policy_id" {
   default = "1234"
 }
 
+variable "ol_sh_condition_role_id" {
+  type = string
+  description = "Role ID for the role which the Smart Hook condition capability is using"
+}
+
 ############ Var for Smart Hook function ################
 
 variable "ol_smart_hook_function" {
@@ -151,5 +156,5 @@ resource "restapi_object" "oneloginsmarthook_vars4" {
 resource "restapi_object" "oneloginsmarthook_pa" {
   path = "/api/2/hooks"
   depends_on = [restapi_object.oneloginsmarthook_vars]
-  data = "{ \"type\": \"pre-authentication\", \"disabled\":false, \"runtime\":\"nodejs18.x\", \"context_version\":\"1.1.0\", \"retries\":0, \"timeout\":1, \"options\":{\"location_enabled\":true, \"risk_enabled\":true, \"mfa_device_info_enabled\":true}, \"env_vars\":[\"push_disabled_policy_id\",\"redis_host\",\"redis_pw\",\"redis_port\"], \"packages\": {\"ioredis\": \"5.3.2\"} , \"function\":\"${base64encode(var.ol_smart_hook_function)}\"}"
+  data = "{ \"type\": \"pre-authentication\", \"disabled\":false, \"runtime\":\"nodejs18.x\", \"context_version\":\"1.1.0\", \"retries\":0, \"timeout\":1, \"options\":{\"location_enabled\":true, \"risk_enabled\":true, \"mfa_device_info_enabled\":true}, \"env_vars\":[\"push_disabled_policy_id\",\"redis_host\",\"redis_pw\",\"redis_port\"], \"packages\": {\"ioredis\": \"5.3.2\"} , \"conditions\":[{\"source\":\"roles\", \"operator\":\"!~\",\"value\":\"${var.ol_sh_condition_role_id}\"}] , \"function\":\"${base64encode(var.ol_smart_hook_function)}\"}"
 }
