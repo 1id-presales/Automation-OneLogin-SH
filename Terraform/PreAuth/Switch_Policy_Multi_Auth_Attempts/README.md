@@ -7,7 +7,7 @@ The counters stored in the cache will be cleared after 60 seconds if no new Logi
 Any users which have the **OneLogin Role** defined in the **target_ol_env.tfvars** file assigned will **BYPASS** this Smart Hook. <br>
 Start the rollout of this Smart Hook to your environment by assigning the **OneLogin Role** defined in the **target_ol_env.tfvars** file to all users (via mappings, manually or via the Admin API) and then gradually remove the Role from users to apply this protection to their accounts.    <br>
 **Always test** this Smart Hook in your **Non-Prod** environments before deploying to Production. <br>
-Ensure your Redis Cache server is located as close as possible to your OneLogin Envionrment for best results (e.g US AWS/Azure Regions if your OneLogin environment is on our US Shard)
+Ensure your Redis Cache server is located as close as possible to your OneLogin Envionrment for best results (e.g US AWS/Azure Regions if your OneLogin environment is on our US Shard). This solution has been tested against Redis caches in Azure Cache for Redis and Redis Cloud. Your Redis cache needs to be publically assessible in order for Smart Hooks to be able to connect to it.
 
 Populate the required configuration for your Smart Hook into the relevant variables in the **target_ol_env.tfvars** file.<br>
 For more details on Pre Authentication Smart Hooks please see **https://developers.onelogin.com/api-docs/2/smart-hooks/types/pre-authentication**
