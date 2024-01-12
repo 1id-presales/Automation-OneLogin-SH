@@ -49,10 +49,9 @@ variable "ol_smart_hook_redis_pw" {
   description = "password for your redis host this smart hook will connect to"
 }
 
-variable "ol_smart_hook_env_var1" {
+variable "ol_smart_hook_redis_port" {
   type = string
-  description = "Name of the Smart Hooks Env Var for User Security policy to be switched into- used in pre-auth smart hook"
-  default = "test"
+  description = "port number for your redis host this smart hook will connect to"
 }
 
 variable "ol_policy_id" {
@@ -74,8 +73,9 @@ variable "ol_smart_hook_function" {
   const Redis = require("ioredis");
   const redis_host = process.env.redis_host;
   const redis_pw = process.env.redis_pw;
+   const redis_port = process.env.redis_port;
   const client = new Redis({
-    port: 6380,
+    port: redis_port,
     host: redis_host,
     password: redis_pw,
     tls: true
@@ -128,7 +128,7 @@ variable "ol_smart_hook_function" {
 ## example of how to create some env vars for Smart Hooks to use
 resource "restapi_object" "oneloginsmarthook_vars" {
   path = "/api/2/hooks/envs"
-  data = "{ \"name\": \"${var.ol_smart_hook_env_var1}\", \"value\": \"${var.ol_policy_id}\"}"
+  data = "{ \"name\": \"push_disabled_policy_id\", \"value\": \"${var.ol_policy_id}\"}"
 }
 
 resource "restapi_object" "oneloginsmarthook_vars2" {
@@ -140,11 +140,16 @@ resource "restapi_object" "oneloginsmarthook_vars3" {
   path = "/api/2/hooks/envs"
   data = "{ \"name\": \"redis_pw\", \"value\": \"${var.ol_smart_hook_redis_pw}\"}"
 }
+
+resource "restapi_object" "oneloginsmarthook_vars4" {
+  path = "/api/2/hooks/envs"
+  data = "{ \"name\": \"redis_port\", \"value\": \"${var.ol_smart_hook_redis_port}\"}"
+}
 ############ Smart Hook ################
 
 ## example of how to create a new pre auth smarthook in your OneLogin environment
 resource "restapi_object" "oneloginsmarthook_pa" {
   path = "/api/2/hooks"
   depends_on = [restapi_object.oneloginsmarthook_vars]
-  data = "{ \"type\": \"pre-authentication\", \"disabled\":false, \"runtime\":\"nodejs18.x\", \"context_version\":\"1.1.0\", \"retries\":0, \"timeout\":1, \"options\":{\"location_enabled\":true, \"risk_enabled\":true, \"mfa_device_info_enabled\":true}, \"env_vars\":[\"${var.ol_smart_hook_env_var1}\",\"redis_host\",\"redis_pw\"], \"packages\": {\"ioredis\": \"5.3.2\"} , \"function\":\"${base64encode(var.ol_smart_hook_function)}\"}"
+  data = "{ \"type\": \"pre-authentication\", \"disabled\":false, \"runtime\":\"nodejs18.x\", \"context_version\":\"1.1.0\", \"retries\":0, \"timeout\":1, \"options\":{\"location_enabled\":true, \"risk_enabled\":true, \"mfa_device_info_enabled\":true}, \"env_vars\":[\"push_disabled_policy_id\",\"redis_host\",\"redis_pw\",\"redis_port\"], \"packages\": {\"ioredis\": \"5.3.2\"} , \"function\":\"${base64encode(var.ol_smart_hook_function)}\"}"
 }
