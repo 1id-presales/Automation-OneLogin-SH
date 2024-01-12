@@ -1,6 +1,8 @@
 # How To Instructions
 
 This example will create **a Pre Authentication Smart Hook** in your target OneLogin environment. <br>
+This Smart Hook will allow you to connect to an External Redis Cache to store some additional authentication counters in the cache. Each time a Login request is recieved for a user the counter will be incremented in the cache. The Smart Hook will also check the counter value for that user in the cache and if the value of the counter returned for that user is greater than 3 the Smart Hook will dynamically allocate a User Security policy to the user which has been configured with OneLogin Protect Push notifications to be disabled. The counters stored in the cache will be cleared after 60 seconds if no new Login requests are recieved. This Smart Hook can be rolled out to protect your users in phases by using a OneLogin Role to determine which users will be in scope of this Smart Hook or not. Any users which have the **OneLogin Role** defined in the **target_ol_env.tfvars** file assigned will **bypass** this Smart Hook. Start the rollout of this Smart Hook to your environment by assigning the **OneLogin Role** defined in the **target_ol_env.tfvars** file to all users by a mapping and then gradually remove the Role from users to apply this protection to their accounts.    <br>
+
 Populate the required configuration for your Smart Hook into the relevant variables in the **target_ol_env.tfvars** file.<br>
 For more details on Pre Authentication Smart Hooks please see **https://developers.onelogin.com/api-docs/2/smart-hooks/types/pre-authentication**
 
