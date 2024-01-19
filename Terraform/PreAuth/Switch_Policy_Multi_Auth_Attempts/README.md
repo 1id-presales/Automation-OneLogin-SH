@@ -29,7 +29,7 @@ Create an API credential for Terraform to use in your target OneLogin environmen
 <br><pre>`terraform plan -var-file "target_ol_env.tfvars"`</pre>
 - If you are happy with the output of the plan from the previous step proceed to apply the planned changes. Apply the planned changes with the below command and enter yes at the prompt.
 <br><pre>`terraform apply -var-file "target_ol_env.tfvars"`</pre> 
-- Navigate to the Admin console of your target OneLogin environment and go to the events page and validate the Smart Hook has been created successfully by looking for the "Smart Hook created" event.
+- Navigate to the Admin console of your target OneLogin environment and go to the events page and validate the Smart Hook has been created successfully by looking for the "Smart Hook created" event. Perform test authentication traffic and validate the Smart Hook is executing successfully (**please note - the first 2 Authentication requests after this Smart Hook is deployed may fail due to a timeout but after that everything should work**)
 - To run a cleanup to remove this **Pre Authentication Smart Hook** from your target OneLogin environment run the command 
 <br><pre>`terraform destroy -var-file "target_ol_env.tfvars"`</pre>
 _Please note you may need to run this command twice to fully clean up the created resources._
