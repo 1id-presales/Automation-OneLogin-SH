@@ -16,11 +16,11 @@ Create an API credential for Terraform to use in your target OneLogin environmen
 
 **START**
 - From a system with Terraform and Git installed create a new folder and run 
-<br></pre>`git clone https://github.com/1id-presales/Automation-OneLogin.git`</pre>
+<br></pre>`git clone https://github.com/1id-presales/Automation-OneLogin-SH.git`</pre>
 - Navigate into the Switch_Policy_Multi_Auth_Attempts folder with 
 <br></pre>`cd Automation-OneLogin-SH/Terraform/PreAuth/Switch_Policy_Multi_Auth_Attempts`</pre>
 - Modify the contents of the file `target_ol_env.tfvars` with your favourite text editor as required.
-- Set the ol_client_secret variable in your system level environment variables with `export TF_VAR_ol_client_secret=xxxxxxxxx` replacing `xxxx` with the client secret from the API credential you have already created for running Terraform against your target OneLogin Environement.
+- Set the ol_client_secret variable in your system level environment variables with `export TF_VAR_ol_client_secret=xxxxxxxxx` replacing `xxxx` with the client secret from the API credential you have already created for running Terraform against your target OneLogin Environement. Also set the password for your target Redis cache with `export TF_VAR_ol_smart_hook_redis_pw="XXXXXX"`
 <br><pre>`export TF_VAR_ol_client_secret=xxxxx`</pre>
 - Initialize your terraform environment by running the command 
 <br><pre>`terraform init`</pre>
