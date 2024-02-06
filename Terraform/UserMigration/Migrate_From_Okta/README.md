@@ -2,7 +2,20 @@
 
 This example will create **User Migration Smart Hook** (and 2 **Smart Hook Environment Variables**) in your target OneLogin environment. <br>
 This Smart Hook will allow you to connect to an existing Okta environment (via the Okta Authentication V1 API) and migrate your Okta users along with their existing Okta passwords into your target OneLogin environment. <br>
+This Smart Hook will first call the /api/v1/authn endpoint to attempt to validate the credentials entered into the OneLogin Hosted Login page for every authentication request where the specified username does not already exist in the OneLogin cloud directory. If the credentials have been successfully validated the Smart Hook will then proceed to call the  /api/v1/users/ endpoint on Okta and extract the full user profile before using this information to create the new user in your OneLogin environment based on the attribute mapping defined in the Smart Hook. <br>
 
+**Before** running this example it is required to **create some custom fields** in your target OneLogin environment to hold all of the attributes from the standard Okta user profile. It is not currently possible to create these custom fields via the OneLogin Admin API and must be done in the Admin Console manually. <br>
+
+The following custom fields should be created in your target OneLogin environment. <br>
+
+**user_locale** <br>
+**secondEmail** <br>
+**userType** <br>
+**employeeNumber** <br>
+**costCenter** <br>
+**division** <br>
+**honorificPrefix** <br>
+**honorificSuffix**  <br>
 
 Populate the required configuration for your Smart Hook into the relevant variables in the **target_ol_env.tfvars** file.<br>
 For more details on the User Migration Smart Hooks please see **https://developers.onelogin.com/api-docs/2/smart-hooks/types/user-migration**
