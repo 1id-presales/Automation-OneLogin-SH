@@ -3,4 +3,4 @@
 
 ol_subdomain = ""            # required - OneLogin subdomain name
 ol_client_id = ""            # required - API credential Client ID from your OneLogin env
-ol_smart_hook_env_var1 = ""  # required - OKTA subdomain name e.g 
+ol_smart_hook_env_var1 = ""  # required - OKTA subdomain name e.g xxxxxx.okta.com / xxxxxxx.oktapreview.com
