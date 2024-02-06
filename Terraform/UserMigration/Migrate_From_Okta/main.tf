@@ -46,7 +46,7 @@ variable "ol_smart_hook_env_var1" {
   default = "test"
 }
 
-variable "ol_smart_hook_env_var2" {
+variable "okta_api_key" {
   type = string
   description = "Okta API Key"
   default = "test"
@@ -150,7 +150,7 @@ resource "restapi_object" "oneloginsmarthook_vars" {
 ## example of how to create some env vars for Smart Hooks to use
 resource "restapi_object" "oneloginsmarthook_vars2" {
   path = "/api/2/hooks/envs"
-  data = "{ \"name\": \"OKTA_API_KEY\", \"value\": \"${var.ol_smart_hook_env_var2}\"}"
+  data = "{ \"name\": \"OKTA_API_KEY\", \"value\": \"${var.okta_api_key}\"}"
 }
 
 ############ Smart Hook ################
