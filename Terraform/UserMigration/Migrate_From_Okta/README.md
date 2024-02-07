@@ -2,8 +2,11 @@
 
 This example will create a **User Migration Smart Hook** (and 2 **Smart Hook Environment Variables**) in your target OneLogin environment. <br>
 This Smart Hook will allow you to connect to an existing Okta environment (via the Okta Authentication V1 API) and migrate your Okta users along with their existing Okta passwords into your target OneLogin environment. <br>
-This Smart Hook will first call the /api/v1/authn endpoint to attempt to validate the credentials entered into the OneLogin Hosted Login page for every authentication request recieved where the specified username does not already exist in the OneLogin cloud directory. <br>
+This Smart Hook will first call the /api/v1/authn endpoint to attempt to validate the credentials entered into the OneLogin hosted login page. <br>
 If the credentials have been successfully validated the Smart Hook will then proceed to call the  /api/v1/users/ endpoint on Okta and extract the full user profile before using this information to create the new user in your OneLogin environment based on the attribute mapping defined in the Smart Hook. <br>
+This Smart Hook will execute each time an authentication request is initiated to your OneLogin environment (via the hosted login page) and the specified username does not already exist. If an authentication request is recieved for a user that already exists in your OneLogin environment the Smart Hook will not execute.<br>
+
+This example calls the Okta Admin API using the OKTA API Token approach. **Before** running this example it is required to create an API Token in your Okta environment as this will be needed for the Smart Hook to be able to get the user profile once the credential validation step has completed. Please refer to Okta developer documentation for more detail.<br>
 
 **Before** running this example it is required to **create some custom fields** in your target OneLogin environment to hold all of the attributes from the standard Okta user profile. It is not currently possible to create these custom fields via the OneLogin Admin API and must be done in the Admin Console manually. <br>
 
