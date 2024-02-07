@@ -8,7 +8,7 @@ This Smart Hook will execute each time an authentication request is initiated to
 
 This example calls the Okta Admin API using the OKTA API Token approach. **Before** running this example it is required to create an API Token in your Okta environment as this will be needed for the Smart Hook to be able to get the user profile once the credential validation step has completed. Please refer to Okta developer documentation for more detail.<br>
 
-**Before** running this example it is required to **create some custom fields** in your target OneLogin environment to hold all of the attributes from the standard Okta user profile. It is not currently possible to create these custom fields via the OneLogin Admin API and must be done in the Admin Console manually. <br>
+**Before** running this example it is required to **create some custom fields** in your target OneLogin environment to hold all of the attributes from the standard Okta user profile. It is not currently possible to create these custom fields via the OneLogin Admin API and must be done in your OneLogin Admin console manually. <br>
 
 The following custom fields should be created in your target OneLogin environment. <br>
 
